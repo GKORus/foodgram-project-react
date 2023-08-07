@@ -137,14 +137,14 @@ class RecipeSerializer(ModelSerializer):
             'ingredients__name',
             'ingredients__measurement_unit',
             'amount'
-            )
+        )
         return [
             {
                 key.replace('ingredients__', ''):
                 val for key, val in ingredient.items()
-                }
+            }
             for ingredient in ingredients
-            ]
+        ]
 
     def get_is_favorited(self, obj):
         user = self.context.get('request').user
