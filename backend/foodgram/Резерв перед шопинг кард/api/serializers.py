@@ -74,7 +74,7 @@ class RecipeReadSerializer(serializers.ModelSerializer):
     tags = TagSerializer(many=True)
     author = UserSerializer(read_only=True)    
     ingredients = serializers.SerializerMethodField()
-#    is_in_shopping_cart = SerializerMethodField(read_only=True)
+    is_in_shopping_cart = SerializerMethodField(read_only=True)
 #    image = Base64ImageField()
 #    is_favorited = SerializerMethodField(read_only=True)
 
@@ -84,7 +84,7 @@ class RecipeReadSerializer(serializers.ModelSerializer):
             'id', 'tags', #'image',
             'ingredients', 'name',
             'text', 'cooking_time', 'author',
-            #'is_in_shopping_cart' #'is_favorited'
+            'is_in_shopping_cart' #'is_favorited'
         ]
 
     def get_ingredients(self, instance):
@@ -93,11 +93,11 @@ class RecipeReadSerializer(serializers.ModelSerializer):
             many=True
         ).data
 
-    # def get_is_in_shopping_cart(self, obj):
-    #     user = self.context.get('request').user
-    #     if user.is_anonymous:
-    #         return False
-    #     return user.shopping_cart.filter(recipe=obj).exists()    
+    def get_is_in_shopping_cart(self, obj):
+        user = self.context.get('request').user
+        if user.is_anonymous:
+            return False
+        return user.shopping_cart.filter(recipe=obj).exists()    
 
     # def get_is_favorited(self, obj):
     #     user = self.context.get('request').user

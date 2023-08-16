@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from django.db.models import UniqueConstraint
 
 User = get_user_model()
 
@@ -148,61 +147,33 @@ class Favorite(models.Model):
         return f"Рецепт {self.recipe} в избранном у {self.user}"
 
 
-# class ShoppingCart(models.Model):
-#     """Модель списка покупок пользователя"""
-#     user = models.ForeignKey(
-#         User,
-#         on_delete=models.CASCADE,
-#         related_name='shopping_cart',
-#         verbose_name='Пользователь',
-#     )
-#     recipe = models.ForeignKey(
-#         Recipe,
-#         on_delete=models.CASCADE,
-#         related_name='shopping_cart',
-#         verbose_name='Рецепт',
-#     )
-
-#     class Meta:
-#         verbose_name = 'Покупка'
-#         verbose_name_plural = 'Покупки'
-#         constraints = [
-#             models.UniqueConstraint(
-#                 fields=(
-#                     'user',
-#                     'recipe',
-#                 ),
-#                 name='unique_shopping_cart'
-#             )
-#         ]
-
-#     def __str__(self):
-#         return f'Рецепт {self.recipe} в списке покупок {self.user}'
-
-
-class Subscribe(models.Model):
-    """Модель подписки на авторов рецептов"""
+class ShoppingCart(models.Model):
+    """Модель списка покупок пользователя"""
     user = models.ForeignKey(
         User,
-        related_name='subscriber',
-        verbose_name='Подписчик',
         on_delete=models.CASCADE,
+        related_name='shopping_cart',
+        verbose_name='Пользователь',
     )
-    author = models.ForeignKey(
-        User,
-        related_name='subscribing',
-        verbose_name='Автор',
+    recipe = models.ForeignKey(
+        Recipe,
         on_delete=models.CASCADE,
+        related_name='shopping_cart',
+        verbose_name='Рецепт',
     )
 
     class Meta:
-        ordering = ['-id']
+        verbose_name = 'Покупка'
+        verbose_name_plural = 'Покупки'
         constraints = [
-            UniqueConstraint(fields=['user', 'author'],
-                             name='unique_subscription')
+            models.UniqueConstraint(
+                fields=(
+                    'user',
+                    'recipe',
+                ),
+                name='unique_shopping_cart'
+            )
         ]
-        verbose_name = 'Подписка'
-        verbose_name_plural = 'Подписки'
 
     def __str__(self):
-        return (f'{self.user.username} подписан на {self.author.username}')
+        return f'Рецепт {self.recipe} в списке покупок {self.user}'

@@ -11,7 +11,7 @@ from rest_framework.decorators import action
 from django.http import HttpResponse
 from django.db.models import Sum
 
-from api.models import Tag, Recipe, Ingredient, Favorite, RecipeIngredient
+from api.models import Tag, Recipe, Ingredient, Favorite, RecipeIngredient, ShoppingCart
 from api.serializers import TagSerializer, ShortRecipeSerializer, RecipeCreateSerializer, IngredientSerializer, RecipeReadSerializer, UserSerializer
 
 User = get_user_model()
@@ -72,36 +72,36 @@ class RecipeViewSet(viewsets.ModelViewSet):
         return Response('Такого рецепта уже нет',
                         status=status.HTTP_400_BAD_REQUEST)
 
-    # def shopping_cart(self, request, pk):
-    #     if request.method == 'POST':
-    #         return self.add_recipe(ShoppingCart, request.user, pk)
-    #     return self.delete_recipe(ShoppingCart, request.user, pk)
+    def shopping_cart(self, request, pk):
+        if request.method == 'POST':
+            return self.add_recipe(ShoppingCart, request.user, pk)
+        return self.delete_recipe(ShoppingCart, request.user, pk)
 
-    # @action(
-    #     detail=False,
-    #     methods=['GET'],
-    #     url_path='download_shopping_cart',
-    # )
-    # def download_shopping_cart(self, request):
-    #     ingredient_list = 'Cписок покупок:'
-    #     ingredients = RecipeIngredient.objects.filter(
-    #         recipe__shopping_cart__user=request.user
-    #     ).values(
-    #         'ingredient__name', 'ingredient__measurement_unit'
-    #     ).annotate(amount_sum=Sum('amount'))
-    #     for num, i in enumerate(ingredients):
-    #         ingredient_list += (
-    #             f"\n{i['ingredient__name']} - "
-    #             f"{i['amount_sum']} {i['ingredient__measurement_unit']}"
-    #         )
-    #         if num < ingredients.count() - 1:
-    #             ingredient_list += ', '
-    #     file = 'shopping_list'
-    #     response = HttpResponse(
-    #         ingredient_list, 'Content-Type: application/pdf'
-    #     )
-    #     response['Content-Disposition'] = f'attachment; filename="{file}.pdf"'
-    #     return response
+    @action(
+        detail=False,
+        methods=['GET'],
+        url_path='download_shopping_cart',
+    )
+    def download_shopping_cart(self, request):
+        ingredient_list = 'Cписок покупок:'
+        ingredients = RecipeIngredient.objects.filter(
+            recipe__shopping_cart__user=request.user
+        ).values(
+            'ingredient__name', 'ingredient__measurement_unit'
+        ).annotate(amount_sum=Sum('amount'))
+        for num, i in enumerate(ingredients):
+            ingredient_list += (
+                f"\n{i['ingredient__name']} - "
+                f"{i['amount_sum']} {i['ingredient__measurement_unit']}"
+            )
+            if num < ingredients.count() - 1:
+                ingredient_list += ', '
+        file = 'shopping_list'
+        response = HttpResponse(
+            ingredient_list, 'Content-Type: application/pdf'
+        )
+        response['Content-Disposition'] = f'attachment; filename="{file}.pdf"'
+        return response
 
     # @action(
     #     detail=True,
