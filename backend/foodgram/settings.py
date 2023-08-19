@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'recipes',
     'api',
     'django_filters',
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -124,29 +125,28 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DJOSER = {
+    'HIDE_USERS': False,
     'LOGIN_FIELD': 'email',
     'PERMISSIONS': {
         'token_create': ['rest_framework.permissions.AllowAny'],
         'user_list': ['rest_framework.permissions.AllowAny'],
         'user': ['rest_framework.permissions.AllowAny'],
-    },    
+    },
     'SERIALIZERS': {
         'user': 'api.serializers.UserSerializer',
         'user_list': 'api.serializers.UserSerializer',
         'current_user': 'api.serializers.UserSerializer',
         'user_create': 'api.serializers.UserCreateSerializer',
-    },   
+    },
 }
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated', 
+        'rest_framework.permissions.AllowAny',
     ],
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_PAGINATION_CLASS': 'api.pagination.LimitPageNumberPagination',
     'PAGE_SIZE': 6,
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
     ],
 }
-
-
