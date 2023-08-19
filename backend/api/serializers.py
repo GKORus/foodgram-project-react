@@ -72,7 +72,7 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
     name = serializers.CharField(source='ingredient.name')
     measurement_unit = serializers.CharField(
         source='ingredient.measurement_unit'
-        )
+    )
 
     class Meta:
         model = RecipeIngredient
@@ -207,7 +207,7 @@ class UserWithRecipesSerializer(UserSerializer):
         qs = obj.author_of.all()
         recipes_limit = self.context['request'].query_params.get(
             'recipes_limit'
-            )
+        )
         if recipes_limit:
             qs = qs[:int(recipes_limit)]
         return ShortRecipeSerializer(qs, many=True) .data

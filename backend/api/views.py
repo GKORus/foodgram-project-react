@@ -58,7 +58,7 @@ class RecipeViewSet(ModelViewSet):
             permission_classes = [
                 IsAuthenticated,
                 IsAuthorOrReadOnlyPermission
-                ]
+            ]
         else:
             permission_classes = [AllowAny]
         return [permission() for permission in permission_classes]
@@ -159,7 +159,7 @@ class SubscriptionView(APIView):
         serializer = UserWithRecipesSerializer(
             author,
             context={'request': request}
-            )
+        )
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def delete(self, request, id):
@@ -167,7 +167,7 @@ class SubscriptionView(APIView):
         subscription = Subscription.objects.filter(
             user=request.user,
             author=author
-            )
+        )
         if subscription.exists():
             subscription.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
