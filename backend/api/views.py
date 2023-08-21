@@ -107,7 +107,11 @@ class RecipeViewSet(ModelViewSet):
         if request.method == 'POST':
             return self.add_related_object(ShoppingCartItem, request.user, pk)
         elif request.method == 'DELETE':
-            return self.delete_related_object(ShoppingCartItem, request.user, pk)
+            return self.delete_related_object(
+                ShoppingCartItem,
+                request.user,
+                pk
+            )
 
     @action(
         detail=False,
