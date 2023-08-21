@@ -70,20 +70,20 @@ class RecipeViewSet(ModelViewSet):
         os.unlink(instance.image.path)
         instance.delete()
 
-    def add_recipe(self, model, user, pk):
+    def add_related_object(self, model, user, pk):
         if model.objects.filter(user=user, recipe__id=pk).exists():
-            raise ValidationError('Recipe already exists')
+            raise ValidationError('Рецепт уже существует')
         recipe = get_object_or_404(Recipe, id=pk)
         model.objects.create(user=user, recipe=recipe)
         serializer = ShortRecipeSerializer(recipe)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    def delete_recipe(self, model, user, pk):
+    def delete_related_object(self, model, user, pk):
         obj = model.objects.filter(user=user, recipe__id=pk)
         if obj.exists():
             obj.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
-        raise ValidationError('Recipe doesn\'t exist')
+        raise ValidationError('Рецепта не существует')
 
     @action(
         detail=True,
@@ -93,9 +93,9 @@ class RecipeViewSet(ModelViewSet):
     )
     def favorite(self, request, pk):
         if request.method == 'POST':
-            return self.add_recipe(Favorite, request.user, pk)
+            return self.add_related_object(Favorite, request.user, pk)
         elif request.method == 'DELETE':
-            return self.delete_recipe(Favorite, request.user, pk)
+            return self.delete_related_object(Favorite, request.user, pk)
 
     @action(
         detail=True,
@@ -105,9 +105,9 @@ class RecipeViewSet(ModelViewSet):
     )
     def shopping_cart(self, request, pk):
         if request.method == 'POST':
-            return self.add_recipe(ShoppingCartItem, request.user, pk)
+            return self.add_related_object(ShoppingCartItem, request.user, pk)
         elif request.method == 'DELETE':
-            return self.delete_recipe(ShoppingCartItem, request.user, pk)
+            return self.delete_related_object(ShoppingCartItem, request.user, pk)
 
     @action(
         detail=False,
