@@ -131,9 +131,6 @@ dmypy.json
 # .idea
 .idea
 
-# Миграции
-migrations/
-
 # Модули Node.js
 node_modules/
 
