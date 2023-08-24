@@ -28,10 +28,10 @@ SECRET_KEY='SECRET_KEY'	# Ваш секретный ключ Django, котор�
 - сформируйте файл nginx на удаленном сервере;
 - запустите на удаленном сервере контейнеры скачав их Dockerhub запустив файл docker-compose.production.yml на удаленном сервере командой docker compose -f docker-compose.production.yml up
 - соберите статику:
-<pre>
+```
 docker compose -f docker-compose.production.yml exec backend python manage.py collectstatic
 docker compose -f docker-compose.production.yml exec backend cp -r /app/collected_static/. /backend_static/static/
-</pre>
+```
 - осуществите миграции:
 docker compose -f docker-compose.production.yml exec backend python manage.py migrate
 - создать администратора проекта: 
