@@ -1,9 +1,9 @@
 # Foodgram
 
-Проект размещен на сайте: https://tmukhor.sytes.net
-Адрес домена: 51.250.107.251
-Логин администратора: kirill
-Пароль администратора: 1
+- Проект размещен на сайте: https://tmukhor.sytes.net
+- Адрес домена: 51.250.107.251
+- Логин администратора: kirill
+- Пароль администратора: 1
 
 # Описание
 "Foodgram" является платформой, которая объединяет людей с разнообразными интересами в кулинарии. Проект предлагает возможность пользователям делиться своим кулинарными рецептами: 
@@ -18,12 +18,12 @@
 - сохранить на удаленном сервере docker-compose.production.yml;
 - сформируйте .env файл на удаленном сервере:
 Конфигурационный файл .env
-POSTGRES_USER=django_user           # Имя пользователя базы данных PostgreSQL
-POSTGRES_PASSWORD=mysecretpassword  # Пароль пользователя базы данных PostgreSQL
-POSTGRES_DB=django                  # Имя базы данных PostgreSQL, которую будет использовать проект
-DB_HOST=db                          # Хост (адрес) сервера базы данных PostgreSQL
-DB_PORT=5432                        # Порт для подключения к базе данных PostgreSQL
-SECRET_KEY='SECRET_KEY'		    # Ваш секретный ключ Django, который используется для шифрования данных
+POSTGRES_USER=django_user # Имя пользователя базы данных PostgreSQL
+POSTGRES_PASSWORD=mysecretpassword # Пароль пользователя базы данных PostgreSQL
+POSTGRES_DB=django # Имя базы данных PostgreSQL, которую будет использовать проект
+DB_HOST=db # Хост (адрес) сервера базы данных PostgreSQL
+DB_PORT=5432 # Порт для подключения к базе данных PostgreSQL
+SECRET_KEY='SECRET_KEY'	# Ваш секретный ключ Django, который используется для шифрования данных
 - сформируйте файл nginx на удаленном сервере;
 - запустите на удаленном сервере контейнеры скачав их Dockerhub запустив файл docker-compose.production.yml на удаленном сервере командой docker compose -f docker-compose.production.yml up
 - соберите статику:
