@@ -26,13 +26,20 @@ DB_PORT=5432 # Порт для подключения к базе данных P
 SECRET_KEY='SECRET_KEY'	# Ваш секретный ключ Django, который используется для шифрования данных
 
 - сформируйте файл nginx на удаленном сервере;
-- запустите на удаленном сервере контейнеры скачав их Dockerhub запустив файл docker-compose.production.yml на удаленном сервере командой docker compose -f docker-compose.production.yml up
+- запустите на удаленном сервере контейнеры скачав их Dockerhub запустив файл docker-compose.production.yml на удаленном сервере командой:
+```
+docker compose -f docker-compose.production.yml up
+```
 - соберите статику:
 ```
 docker compose -f docker-compose.production.yml exec backend python manage.py collectstatic
 docker compose -f docker-compose.production.yml exec backend cp -r /app/collected_static/. /backend_static/static/
 ```
 - осуществите миграции:
+```
 docker compose -f docker-compose.production.yml exec backend python manage.py migrate
+```
 - создать администратора проекта: 
+```
 sudo docker-compose exec web python manage.py createsuperuser
+```
