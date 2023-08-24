@@ -17,13 +17,13 @@
 
 - сохранить на удаленном сервере docker-compose.production.yml;
 - сформируйте .env файл на удаленном сервере:
-Конфигурационный файл .env<br>.
-POSTGRES_USER=django_user # Имя пользователя базы данных PostgreSQL<br>.
-POSTGRES_PASSWORD=mysecretpassword # Пароль пользователя базы данных PostgreSQL<br>.
-POSTGRES_DB=django # Имя базы данных PostgreSQL, которую будет использовать проект<br>.
-DB_HOST=db # Хост (адрес) сервера базы данных PostgreSQL<br>.
-DB_PORT=5432 # Порт для подключения к базе данных PostgreSQL<br>.
-SECRET_KEY='SECRET_KEY'	# Ваш секретный ключ Django, который используется для шифрования данных<br>.
+<br>Конфигурационный файл .env<br>
+POSTGRES_USER=django_user # Имя пользователя базы данных PostgreSQL<br>
+POSTGRES_PASSWORD=mysecretpassword # Пароль пользователя базы данных PostgreSQL<br>
+POSTGRES_DB=django # Имя базы данных PostgreSQL, которую будет использовать проект<br>
+DB_HOST=db # Хост (адрес) сервера базы данных PostgreSQL<br>
+DB_PORT=5432 # Порт для подключения к базе данных PostgreSQL<br>
+SECRET_KEY='SECRET_KEY'	# Ваш секретный ключ Django, который используется для шифрования данных
 
 - сформируйте файл nginx на удаленном сервере;
 - запустите на удаленном сервере контейнеры скачав их Dockerhub запустив файл docker-compose.production.yml на удаленном сервере командой docker compose -f docker-compose.production.yml up
